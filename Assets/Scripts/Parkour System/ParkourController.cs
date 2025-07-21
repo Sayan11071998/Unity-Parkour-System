@@ -51,7 +51,19 @@ public class ParkourController : MonoBehaviour
         {
             Debug.Log("The Parkour Animation is Wrong");
         }
-        yield return new WaitForSeconds(animState.length);
+
+        float timer = 0f;
+        while (timer <= animState.length)
+        {
+            timer += Time.deltaTime;
+
+            if (action.RotateToObstacle)
+            {
+                transform.rotation =  Quaternion.RotateTowards(transform.rotation, action.TargetRotation, playerController.RotationSpeed * Time.deltaTime);
+            }
+
+            yield return null;
+        }
 
         playerController.SetControl(true);
         inAction = false;
