@@ -676,6 +676,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a5c457da26bd9c49a01901e0b4722fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parkourActions:
+  - {fileID: 11400000, guid: dad6c00070237604084795bbd6482829, type: 2}
+  - {fileID: 11400000, guid: 44f66f9272a6dae4993b3117788b487d, type: 2}
 --- !u!1 &1402759428
 GameObject:
   m_ObjectHideFlags: 0

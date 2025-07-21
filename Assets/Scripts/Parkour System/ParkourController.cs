@@ -1,8 +1,10 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class ParkourController : MonoBehaviour
 {
+    [SerializeField] private List<ParkourAction> parkourActions;
 
     private EnvironmentScanner environmentScanner;
     private Animator animator;
@@ -25,19 +27,30 @@ public class ParkourController : MonoBehaviour
 
             if (hitData.forwardHitFound)
             {
-                StartCoroutine(DoParkourAction());
+                foreach (var action in parkourActions)
+                {
+                    if (action.CheckIfPossible(hitData, transform))
+                    {
+                        StartCoroutine(DoParkourAction(action));
+                        break;
+                    }
+                }
             }
         }
     }
 
-    IEnumerator DoParkourAction()
+    IEnumerator DoParkourAction(ParkourAction action)
     {
         inAction = true;
         playerController.SetControl(false);
-        animator.CrossFade("StepUp", 0.2f);
+        animator.CrossFade(action.AnimName, 0.2f);
         yield return null;
 
         var animState = animator.GetNextAnimatorStateInfo(0);
+        if (!animState.IsName(action.AnimName))
+        {
+            Debug.Log("The Parkour Animation is Wrong");
+        }
         yield return new WaitForSeconds(animState.length);
 
         playerController.SetControl(true);
