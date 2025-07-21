@@ -62,10 +62,21 @@ public class ParkourController : MonoBehaviour
                 transform.rotation =  Quaternion.RotateTowards(transform.rotation, action.TargetRotation, playerController.RotationSpeed * Time.deltaTime);
             }
 
+            if (action.EnableTargetMatching)
+            {
+                MatchTarget(action);
+            }
+
             yield return null;
         }
 
         playerController.SetControl(true);
         inAction = false;
+    }
+
+    private void MatchTarget(ParkourAction action)
+    {
+        if (animator.isMatchingTarget) return;
+        animator.MatchTarget(action.MatchPos, transform.rotation, action.MatchBodyPart, new MatchTargetWeightMask(new Vector3(0f, 1f, 0f), 0f), action.MatchStartTime, action.MatchTargetTime);
     }
 }
