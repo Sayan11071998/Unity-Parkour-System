@@ -787,7 +787,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   parkourActions:
   - {fileID: 11400000, guid: dad6c00070237604084795bbd6482829, type: 2}
-  - {fileID: 11400000, guid: f08bb26e0395b1745b933c6654ecfc5d, type: 2}
+  - {fileID: 11400000, guid: 9d010eef300f11f45990f6e86dc3a274, type: 2}
   - {fileID: 11400000, guid: 44f66f9272a6dae4993b3117788b487d, type: 2}
   - {fileID: 11400000, guid: 7617d09bc7235234bac17e49275a2e3b, type: 2}
 --- !u!1 &1402759428
