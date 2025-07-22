@@ -770,9 +770,11 @@ MonoBehaviour:
   forwardRayOffset: {x: 0, y: 0.25, z: 0}
   forwardRayLength: 0.8
   heightRayLength: 5
+  ledgeRayLength: 10
   obstacleLayer:
     serializedVersion: 2
     m_Bits: 64
+  ledgeHeightThreshold: 0.75
 --- !u!114 &1230118741
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -790,6 +792,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 9d010eef300f11f45990f6e86dc3a274, type: 2}
   - {fileID: 11400000, guid: 44f66f9272a6dae4993b3117788b487d, type: 2}
   - {fileID: 11400000, guid: 7617d09bc7235234bac17e49275a2e3b, type: 2}
+  jumpDownAction: {fileID: 11400000, guid: f57ca7fa99d67be499c5b0c6ea8587d6, type: 2}
 --- !u!1 &1402759428
 GameObject:
   m_ObjectHideFlags: 0
