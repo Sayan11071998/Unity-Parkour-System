@@ -22,6 +22,7 @@ public class PlayerController : MonoBehaviour
     private bool hasControl = true;
 
     public bool IsOnLedge { get; set; }
+    public LedgeData LedgeData { get; set; }
 
     private void Awake()
     {
@@ -52,7 +53,12 @@ public class PlayerController : MonoBehaviour
         {
             ySpeed = -0.5f;
             velocity = moveDir * moveSpeed;
-            IsOnLedge = environmentScanner.LedgeCheck(moveDir);
+            IsOnLedge = environmentScanner.LedgeCheck(moveDir, out LedgeData ledgeData);
+
+            if (IsOnLedge)
+            {
+                LedgeData = ledgeData;
+            }
         }
         else
         {

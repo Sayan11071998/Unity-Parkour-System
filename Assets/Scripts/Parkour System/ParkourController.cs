@@ -22,10 +22,10 @@ public class ParkourController : MonoBehaviour
 
     private void Update()
     {
+        var hitData = environmentScanner.ObstacleCheck();
+        
         if (Input.GetButton("Jump") && !inAction)
         {
-            var hitData = environmentScanner.ObstacleCheck();
-
             if (hitData.forwardHitFound)
             {
                 foreach (var action in parkourActions)
@@ -39,10 +39,13 @@ public class ParkourController : MonoBehaviour
             }
         }
 
-        if (playerController.IsOnLedge && !inAction)
+        if (playerController.IsOnLedge && !inAction && !hitData.forwardHitFound)
         {
-            playerController.IsOnLedge = false;
-            StartCoroutine(DoParkourAction(jumpDownAction));
+            if (playerController.LedgeData.angle <= 50f)
+            {
+                playerController.IsOnLedge = false;
+                StartCoroutine(DoParkourAction(jumpDownAction));
+            }
         }
     }
 
