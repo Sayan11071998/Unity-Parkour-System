@@ -91,12 +91,26 @@ public class PlayerController : MonoBehaviour
 
     private void LedgeMovement()
     {
-        float angle = Vector3.Angle(LedgeData.surfaceHit.normal, desiredMoveDir);
+        float signedAngle = Vector3.SignedAngle(LedgeData.surfaceHit.normal, desiredMoveDir, Vector3.up);
+        float angle = Mathf.Abs(signedAngle);
 
-        if (angle < 90f)
+        if (Vector3.Angle(desiredMoveDir, transform.forward) >= 80)
+        {
+            velocity = Vector3.zero;
+            return;
+        }
+
+        if (angle < 60)
         {
             velocity = Vector3.zero;
             moveDir = Vector3.zero;
+        }
+        else if (angle < 90)
+        {
+            var left = Vector3.Cross(Vector3.up, LedgeData.surfaceHit.normal);
+            var dir = left * Mathf.Sign(signedAngle);
+            velocity = velocity.magnitude * dir;
+            moveDir = dir;
         }
     }
 
