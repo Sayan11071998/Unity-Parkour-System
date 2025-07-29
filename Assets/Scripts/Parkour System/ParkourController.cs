@@ -6,6 +6,7 @@ public class ParkourController : MonoBehaviour
 {
     [SerializeField] private List<ParkourAction> parkourActions;
     [SerializeField] private ParkourAction jumpDownAction;
+    [SerializeField] private float autoDropHeightLimit = 1f;
 
     private EnvironmentScanner environmentScanner;
     private Animator animator;
@@ -39,9 +40,15 @@ public class ParkourController : MonoBehaviour
             }
         }
 
-        if (playerController.IsOnLedge && !inAction && !hitData.forwardHitFound && Input.GetButton("Jump"))
+        if (playerController.IsOnLedge && !inAction && !hitData.forwardHitFound)
         {
-            if (playerController.LedgeData.angle <= 50f)
+            bool shouldJump = true;
+            if (playerController.LedgeData.height > autoDropHeightLimit && !Input.GetButton("Jump"))
+            {
+                shouldJump = false;
+            }
+
+            if (shouldJump && playerController.LedgeData.angle <= 50f)
             {
                 playerController.IsOnLedge = false;
                 StartCoroutine(DoParkourAction(jumpDownAction));
