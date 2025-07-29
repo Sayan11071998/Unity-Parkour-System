@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -26,6 +27,7 @@ public class PlayerController : MonoBehaviour
 
     public bool IsOnLedge { get; set; }
     public LedgeData LedgeData { get; set; }
+    public bool InAction { get; private set; }
 
     private void Awake()
     {
@@ -114,6 +116,53 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public IEnumerator DoAction(string animName, MatchTargetParams matchParams, Quaternion targetRotation, bool rotate = false, float postDelay = 0f, bool mirror = false)
+    {
+        InAction = true;
+
+        animator.SetBool("mirrorAction", mirror);
+        animator.CrossFade(animName, 0.2f);
+        yield return null;
+
+        var animState = animator.GetNextAnimatorStateInfo(0);
+        if (!animState.IsName(animName))
+        {
+            Debug.Log("The Parkour Animation is Wrong");
+        }
+
+        float timer = 0f;
+        while (timer <= animState.length)
+        {
+            timer += Time.deltaTime;
+
+            if (rotate)
+            {
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+            }
+
+            if (matchParams != null)
+            {
+                MatchTarget(matchParams);
+            }
+
+            if (animator.IsInTransition(0) && timer > 0.5f)
+            {
+                break;
+            }
+
+            yield return null;
+        }
+
+        yield return new WaitForSeconds(postDelay);
+        InAction = false;
+    }
+
+    private void MatchTarget(MatchTargetParams mp)
+    {
+        if (animator.isMatchingTarget) return;
+        animator.MatchTarget(mp.pos, transform.rotation, mp.bodyPart, new MatchTargetWeightMask(mp.posWeight, 0f), mp.startTime, mp.targetTime);
+    }
+
     public void SetControl(bool hasControl)
     {
         this.hasControl = hasControl;
@@ -139,4 +188,13 @@ public class PlayerController : MonoBehaviour
         get => hasControl;
         set => hasControl = value;
     }
+}
+
+public class MatchTargetParams
+{
+    public Vector3 pos;
+    public AvatarTarget bodyPart;
+    public Vector3 posWeight;
+    public float startTime;
+    public float targetTime;
 }
