@@ -28,6 +28,7 @@ public class PlayerController : MonoBehaviour
     public bool IsOnLedge { get; set; }
     public LedgeData LedgeData { get; set; }
     public bool InAction { get; private set; }
+    public bool IsHanging { get; set; }
 
     private void Awake()
     {
@@ -49,6 +50,7 @@ public class PlayerController : MonoBehaviour
         moveDir = desiredMoveDir;
 
         if (!hasControl) return;
+        if (IsHanging) return;
 
         velocity = Vector3.zero;
 
