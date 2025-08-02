@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ClimbPoint : MonoBehaviour
@@ -26,6 +27,23 @@ public class ClimbPoint : MonoBehaviour
         };
 
         neighbours.Add(neighbour);
+    }
+
+    public Neighbour GetNeighbour(Vector2 direction)
+    {
+        Neighbour neighbour = null;
+
+        if (direction.y != 0)
+        {
+            neighbour = neighbours.FirstOrDefault(n => n.direction.y == direction.y);
+        }
+
+        if (neighbour == null && direction.x != 0)
+        {
+            neighbour = neighbours.FirstOrDefault(n => n.direction.x == direction.x);
+        }
+
+        return neighbour;
     }
 
     private void OnDrawGizmos()

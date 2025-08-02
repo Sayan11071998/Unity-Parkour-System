@@ -968,7 +968,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3130506069338888184, guid: 3ddb7b6ae7f73fa419c108a6445dd75c, type: 3}
       propertyPath: neighbours.Array.data[0].direction.y
-      value: 0
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 3130506069338888184, guid: 3ddb7b6ae7f73fa419c108a6445dd75c, type: 3}
       propertyPath: neighbours.Array.data[1].direction.x

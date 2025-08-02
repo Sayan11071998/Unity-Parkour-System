@@ -5,6 +5,7 @@ public class ClimbController : MonoBehaviour
 {
     private PlayerController playerController;
     private EnvironmentScanner envScanner;
+    private ClimbPoint currentPoint;
     
     private void Awake()
     {
@@ -20,6 +21,7 @@ public class ClimbController : MonoBehaviour
             {
                 if (envScanner.ClimbLedgeCheck(transform.forward, out RaycastHit ledgeHit))
                 {
+                    currentPoint = ledgeHit.transform.GetComponent<ClimbPoint>();
                     playerController.SetControl(false);
                     StartCoroutine(JumpToLedge("IdleToHang", ledgeHit.transform, 0.41f, 0.54f));
                 }
@@ -27,7 +29,36 @@ public class ClimbController : MonoBehaviour
         }
         else
         {
+            float h = Mathf.Round(Input.GetAxisRaw("Horizontal"));
+            float v = Mathf.Round(Input.GetAxisRaw("Vertical"));
+            var inputDir = new Vector2(h, v);
 
+            if (playerController.InAction || inputDir == Vector2.zero) return;
+
+            var neighbour = currentPoint.GetNeighbour(inputDir);
+            if (neighbour == null) return;
+
+            if (neighbour.connectionType == ConnectionType.Jump && Input.GetButton("Jump"))
+            {
+                currentPoint = neighbour.point;
+
+                if (neighbour.direction.y == 1)
+                {
+                    StartCoroutine(JumpToLedge("HangHopUp", currentPoint.transform, 0.34f, 0.65f));
+                }
+                else if (neighbour.direction.y == -1)
+                {
+                    StartCoroutine(JumpToLedge("HangHopDown", currentPoint.transform, 0.31f, 0.65f));
+                }
+                else if (neighbour.direction.x == 1)
+                {
+                    StartCoroutine(JumpToLedge("HangHopRight", currentPoint.transform, 0.20f, 0.50f));
+                }
+                else if (neighbour.direction.x == -1)
+                {
+                    StartCoroutine(JumpToLedge("HangHopLeft", currentPoint.transform, 0.20f, 0.50f));
+                }
+            }
         }
     }
 
