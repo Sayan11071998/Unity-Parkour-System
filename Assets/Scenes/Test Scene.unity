@@ -2369,7 +2369,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2202090261176819831, guid: c0ca9d76bc88e8d4fb84c7b56285727a, type: 3}
       propertyPath: neighbours.Array.data[0].connectionType
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2878037374067796961, guid: c0ca9d76bc88e8d4fb84c7b56285727a, type: 3}
       propertyPath: m_Name
