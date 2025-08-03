@@ -123,7 +123,7 @@ public class PlayerController : MonoBehaviour
         InAction = true;
 
         animator.SetBool("mirrorAction", mirror);
-        animator.CrossFade(animName, 0.2f);
+        animator.CrossFadeInFixedTime(animName, 0.2f);
         yield return null;
 
         var animState = animator.GetNextAnimatorStateInfo(0);
@@ -132,12 +132,15 @@ public class PlayerController : MonoBehaviour
             Debug.Log("The Parkour Animation is Wrong");
         }
 
+        float rotateStartTime = (matchParams != null) ? matchParams.startTime : 0f;
+
         float timer = 0f;
         while (timer <= animState.length)
         {
             timer += Time.deltaTime;
+            float normalizedTime = timer / animState.length;
 
-            if (rotate)
+            if (rotate && normalizedTime > rotateStartTime)
             {
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
             }
