@@ -29,11 +29,23 @@ public class ClimbController : MonoBehaviour
         }
         else
         {
+            if (Input.GetButton("Drop") && !playerController.InAction)
+            {
+                StartCoroutine(JumpFromHang());
+                return;
+            }
+
             float h = Mathf.Round(Input.GetAxisRaw("Horizontal"));
             float v = Mathf.Round(Input.GetAxisRaw("Vertical"));
             var inputDir = new Vector2(h, v);
 
             if (playerController.InAction || inputDir == Vector2.zero) return;
+
+            if (currentPoint.MountPoint && inputDir.y == 1)
+            {
+                StartCoroutine(MountFromHang());
+                return;
+            }
 
             var neighbour = currentPoint.GetNeighbour(inputDir);
             if (neighbour == null) return;
@@ -96,5 +108,24 @@ public class ClimbController : MonoBehaviour
         var offVal = (handOffset != null) ? handOffset.Value : new Vector3(0.25f, 0.1f, 0.1f);
         var hDir = (hand == AvatarTarget.RightHand) ? ledge.right : -ledge.right;
         return ledge.position + ledge.forward * offVal.z + Vector3.up * offVal.y - hDir * offVal.x;
+    }
+
+    private IEnumerator JumpFromHang()
+    {
+        playerController.IsHanging = false;
+        yield return playerController.DoAction("JumpFromHang");
+        playerController.ResetTargetRotation();
+        playerController.SetControl(true);
+    }
+
+    private IEnumerator MountFromHang()
+    {
+        playerController.IsHanging = false;
+        yield return playerController.DoAction("MountFromHang");
+
+        playerController.EnableCharacterController(true);
+        yield return new WaitForSeconds(0.5f);
+        playerController.ResetTargetRotation();
+        playerController.SetControl(true);
     }
 }
