@@ -84,6 +84,20 @@ public class EnvironmentScanner : MonoBehaviour
 
         return false;
     }
+
+    public bool DropLedgeCheck(out RaycastHit ledgeHit)
+    {
+        ledgeHit = new RaycastHit();
+
+        var origin = transform.position + Vector3.down * 0.1f + transform.forward * 2f;
+        if (Physics.Raycast(origin, -transform.forward, out RaycastHit hit, 3f, climbLedgeLayer))
+        {
+            ledgeHit = hit;
+            return true;
+        }
+
+        return false;
+    }
 }
 
 public struct ObstacleHitData
