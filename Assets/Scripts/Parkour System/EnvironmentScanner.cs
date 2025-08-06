@@ -10,6 +10,8 @@ public class EnvironmentScanner : MonoBehaviour
     [SerializeField] private float ledgeRayLength = 10f;
     [SerializeField] private LayerMask obstacleLayer;
     [SerializeField] private float ledgeHeightThreshold = 0.75f;
+    [SerializeField] private float ClimbLedgeRayLength = 1.5f;
+    [SerializeField] private LayerMask climbLedgeLayer;
 
     public ObstacleHitData ObstacleCheck()
     {
@@ -28,7 +30,7 @@ public class EnvironmentScanner : MonoBehaviour
         return hitData;
     }
 
-    public bool LedgeCheck(Vector3 moveDir, out LedgeData ledgeData)
+    public bool ObstacleLedgeCheck(Vector3 moveDir, out LedgeData ledgeData)
     {
         ledgeData = new LedgeData();
         
@@ -58,6 +60,42 @@ public class EnvironmentScanner : MonoBehaviour
                 }
             }
         }
+        return false;
+    }
+
+    public bool ClimbLedgeCheck(Vector3 dir, out RaycastHit ledgeHit)
+    {
+        ledgeHit = new RaycastHit();
+
+        if (dir == Vector3.zero) return false;
+
+        var origin = transform.position + Vector3.up * 1.5f;
+        var offset = new Vector3(0, 0.18f, 0);
+
+        for (int i = 0; i < 10; i++)
+        {
+            Debug.DrawRay(origin + offset * i, dir);
+            if (Physics.Raycast(origin + offset * i, dir, out RaycastHit hit, ClimbLedgeRayLength, climbLedgeLayer))
+            {
+                ledgeHit = hit;
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public bool DropLedgeCheck(out RaycastHit ledgeHit)
+    {
+        ledgeHit = new RaycastHit();
+
+        var origin = transform.position + Vector3.down * 0.1f + transform.forward * 2f;
+        if (Physics.Raycast(origin, -transform.forward, out RaycastHit hit, 3f, climbLedgeLayer))
+        {
+            ledgeHit = hit;
+            return true;
+        }
+
         return false;
     }
 }
