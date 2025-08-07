@@ -65,34 +65,22 @@ public class ClimbController : MonoBehaviour
                 currentPoint = neighbour.point;
 
                 if (neighbour.direction.y == 1)
-                {
                     StartCoroutine(JumpToLedge("HangHopUp", currentPoint.transform, 0.34f, 0.65f, handOffset: new Vector3(0.25f, 0.08f, 0.15f)));
-                }
                 else if (neighbour.direction.y == -1)
-                {
                     StartCoroutine(JumpToLedge("HangHopDown", currentPoint.transform, 0.31f, 0.65f, handOffset: new Vector3(0.25f, 0.1f, 0.13f)));
-                }
                 else if (neighbour.direction.x == 1)
-                {
                     StartCoroutine(JumpToLedge("HangHopRight", currentPoint.transform, 0.20f, 0.50f));
-                }
                 else if (neighbour.direction.x == -1)
-                {
                     StartCoroutine(JumpToLedge("HangHopLeft", currentPoint.transform, 0.20f, 0.50f));
-                }
             }
             else if (neighbour.connectionType == ConnectionType.Move)
             {
                 currentPoint = neighbour.point;
 
                 if (neighbour.direction.x == 1)
-                {
                     StartCoroutine(JumpToLedge("ShimmyRight", currentPoint.transform, 0f, 0.38f, handOffset: new Vector3(0.25f, 0.05f, 0.1f)));
-                }
                 else if (neighbour.direction.x == -1)
-                {
                     StartCoroutine(JumpToLedge("ShimmyLeft", currentPoint.transform, 0f, 0.38f, AvatarTarget.LeftHand, handOffset: new Vector3(0.25f, 0.05f, 0.1f)));
-                }
             }
         }
     }

@@ -5,13 +5,13 @@ using System.Linq;
 public class EnvironmentScanner : MonoBehaviour
 {
     [SerializeField] private Vector3 forwardRayOffset = new Vector3(0, 0.25f, 0);
+    [SerializeField] private LayerMask obstacleLayer;
+    [SerializeField] private LayerMask climbLedgeLayer;
     [SerializeField] private float forwardRayLength = 0.8f;
     [SerializeField] private float heightRayLength = 5f;
     [SerializeField] private float ledgeRayLength = 10f;
-    [SerializeField] private LayerMask obstacleLayer;
     [SerializeField] private float ledgeHeightThreshold = 0.75f;
     [SerializeField] private float ClimbLedgeRayLength = 1.5f;
-    [SerializeField] private LayerMask climbLedgeLayer;
 
     public ObstacleHitData ObstacleCheck()
     {

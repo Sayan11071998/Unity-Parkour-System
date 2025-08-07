@@ -42,9 +42,7 @@ public class ParkourController : MonoBehaviour
         {
             bool shouldJump = true;
             if (playerController.LedgeData.height > autoDropHeightLimit && !Input.GetButton("Jump"))
-            {
                 shouldJump = false;
-            }
 
             if (shouldJump && playerController.LedgeData.angle <= 50f)
             {
