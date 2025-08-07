@@ -151,7 +151,7 @@ public class PlayerController : MonoBehaviour
 
     private void MatchTarget(MatchTargetParams mp)
     {
-        if (animator.isMatchingTarget) return;
+        if (animator.isMatchingTarget || animator.IsInTransition(0)) return;
         animator.MatchTarget(mp.pos, transform.rotation, mp.bodyPart, new MatchTargetWeightMask(mp.posWeight, 0f), mp.startTime, mp.targetTime);
     }
 
