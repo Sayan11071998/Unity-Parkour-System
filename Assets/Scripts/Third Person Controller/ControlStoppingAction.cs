@@ -7,9 +7,7 @@ public class ControlStoppingAction : StateMachineBehaviour
     public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         if (player == null)
-        {
             player = animator.GetComponent<PlayerController>();
-        }
         player.HasControl = false;
     }
 

@@ -81,9 +81,7 @@ public class PlayerController : MonoBehaviour
         characterController.Move(velocity * Time.deltaTime);
 
         if (moveAmount > 0 && moveDir.magnitude > 0.2f)
-        {
             targetRotation = Quaternion.LookRotation(moveDir);
-        }
 
         transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
     }
@@ -127,10 +125,6 @@ public class PlayerController : MonoBehaviour
         yield return null;
 
         var animState = animator.GetNextAnimatorStateInfo(0);
-        if (!animState.IsName(animName))
-        {
-            Debug.Log("The Parkour Animation is Wrong");
-        }
 
         float rotateStartTime = (matchParams != null) ? matchParams.startTime : 0f;
 
@@ -141,19 +135,12 @@ public class PlayerController : MonoBehaviour
             float normalizedTime = timer / animState.length;
 
             if (rotate && normalizedTime > rotateStartTime)
-            {
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
-            }
 
             if (matchParams != null)
-            {
                 MatchTarget(matchParams);
-            }
 
-            if (animator.IsInTransition(0) && timer > 0.5f)
-            {
-                break;
-            }
+            if (animator.IsInTransition(0) && timer > 0.5f) break;
 
             yield return null;
         }
@@ -180,21 +167,9 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void EnableCharacterController(bool enabled)
-    {
-        characterController.enabled = enabled;
-    }
+    public void EnableCharacterController(bool enabled) => characterController.enabled = enabled;
 
-    public void ResetTargetRotation()
-    {
-        targetRotation = transform.rotation;
-    }
-
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = new Color(0, 1, 1, 0.5f);
-        Gizmos.DrawSphere(transform.TransformPoint(groundCheckOffset), groundCheckRadius);
-    }
+    public void ResetTargetRotation() => targetRotation = transform.rotation;
 
     public float RotationSpeed => rotationSpeed;
 

@@ -25,13 +25,11 @@ public class ParkourAction : ScriptableObject
 
     public virtual bool CheckIfPossible(ObstacleHitData hitData, Transform player)
     {
-        if (!string.IsNullOrEmpty(ObstacleTag) && hitData.forwardHit.transform.tag != ObstacleTag)
-            return false;
+        if (!string.IsNullOrEmpty(ObstacleTag) && hitData.forwardHit.transform.tag != ObstacleTag) return false;
 
         float height = hitData.heightHit.point.y - player.position.y;
 
-        if (height < minHeight || height > maxHeight)
-            return false;
+        if (height < minHeight || height > maxHeight) return false;
 
         if (rotateToObstacle)
             TargetRotation = Quaternion.LookRotation(-hitData.forwardHit.normal);
