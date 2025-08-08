@@ -90,6 +90,13 @@ Whether scaling vertical surfaces, flowing over obstacles, or chaining together 
 
 ---
 
+---
+
+[![Watch the video](https://img.youtube.com/vi/dGSdxasd_dU/maxresdefault.jpg)](https://youtu.be/dGSdxasd_dU)
+### [Gameplay Video](https://youtu.be/dGSdxasd_dU)
+
+---
+
 <img width="1920" height="968" alt="Image" src="https://github.com/user-attachments/assets/20c9359a-6f89-43a5-9c1e-4ef294556896" />
 
 <img width="1920" height="968" alt="Image" src="https://github.com/user-attachments/assets/e44b70a9-2263-472b-a3ad-c7fb87b3aaed" />
